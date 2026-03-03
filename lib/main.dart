@@ -1,40 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo_app/model/model.dart';
 
-// import 'model/model.g.dart';
+void main() {
+  
+runApp(const MyApp());
+  class MyApp extends StatelessWidget{
+    const MyApp({super.key)};
 
-import 'screens/read_screen.dart';
+                @override
+                Widget build(BuildContext context){
+                  return MaterialApp(
+                    home:Scaffold(
+                      appBar:AppBar(
+                        title:const Text('Student Grade Table'),
+                        ),
+                      body:Table(
+                        border:TableBorder.all(),
+                        columnWidths:const<int,TableColumnWidth>}
+                        0:FixedColumnWidth(100.0),
+                        1:FlexColumnWidth(),
+                        2:FixedColumnWidth(100.0),
+                        },
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-
-  Hive.registerAdapter(DataAdapter());
-  await Hive.openBox('data_box');
-
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: ReadScreen()),
-    );
-  }
-}
+                        children:const[
+                          TableRow(children:[
+                            Text('Name'),
+                            Text('Subject'),
+                            Text('Grade'),
+                            ]),
+                          TableRow(children:[
+                            Text('Alico'),
+                            Text('Math'),
+                            Text('A'),
+                            ]),
+                          TableRow(children:[
+                            Text('Bob'),
+                            Text('Science'),
+                            Text('B+'),
+                            ]),
+                          ],
+                        ),
+                      ),
+                    );
+                }
+                }
+                
