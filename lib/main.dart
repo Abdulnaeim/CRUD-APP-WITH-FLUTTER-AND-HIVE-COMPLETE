@@ -1,40 +1,67 @@
-import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo_app/model/model.dart';
+import 'package:flutter/material.dart;
 
-// import 'model/model.g.dart';
-
-import 'screens/read_screen.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-
-  Hive.registerAdapter(DataAdapter());
-  await Hive.openBox('data_box');
-
-  runApp(const MyApp());
+void main(){
+runApp(MyApp());
+}
+class MyApp extends StatelessWidget{
+@override
+widget build(BuildContext context){
+return MaterialApp(
+home:BasicForm(),
+);
+}
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
+class BasicForm extends StatefulWidget{
+@override
+BasicFormState createState(),
+BasicFormState();
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class BasicFormState extends
+State<BasicForm>{
+final formkey =
+GlobalKey<FormState>();
+String name ='';
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: ReadScreen()),
-    );
-  }
+@override
+Widget build(BuildContext context){
+return Scaffold(
+appBar: AppBar(title:Text("Basic Form")),
+body:padding(
+padding:EdgeInsets.all(20),
+child:Form(
+key:formKey,
+child:Column(
+children:[
+TextFormField(
+decoration: InputDecoration(
+labelText: "Enter your name",
+border: OutlineInputBorder(),
+),
+validator: (value){
+if(value == null|| value.isEmpty){
+return "Name is required";
+}
+return null;
+},
+onSaved: (value){
+name = value!;
+},
+),
+SizedBox(height:20),
+ElevatedButton(
+onPressed: (){
+if(formKey. currentState!.validate()){
+formKey.currentState!.save();
+print(name);
+}
+},
+child: Text("Submit"),
+),
+],
+),
+),
+);
+}
 }
