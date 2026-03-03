@@ -1,40 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo_app/model/model.dart';
+import 'package:your_app_name/data/conact_data.dart';
+import'package:your_app_name/model/contact.dart';
 
-// import 'model/model.g.dart';
+void main() {
+  runApp(ContactList());
+  class ContactList extends StatelessWidget{
+    @override
+    Widget build(BuildContext context){
+      return Scaffold(
+        appBar:AppBar(
+          title:Text('Contact List'),
+          ),
+        body:DataTable(
+          columns:const[
 
-import 'screens/read_screen.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-
-  Hive.registerAdapter(DataAdapter());
-  await Hive.openBox('data_box');
-
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
-      debugShowCheckedModeBanner: false,
-    );
+            DataColumn(tabel:Text('Name')),
+            DataColumn(tabel:Text('Email')),
+            DataColumn(tabel:Text('Phone')),
+            ],
+          rows:contacts.map((contact){
+            return DataRow(cells:[
+              DataCell(Text(contact.name)),
+              DataCell(Text(contact.email)),
+              DataCell(Text(contact.phone)),
+              ]);
+          }).toList(),
+          ),
+        );
+    }
   }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: ReadScreen()),
-    );
-  }
-}
+  
+  
