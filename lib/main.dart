@@ -1,40 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo_app/model/model.dart';
 
-// import 'model/model.g.dart';
 
-import 'screens/read_screen.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
+void main() {
+runApp(const MyApp());
+  class MyApp extends StatelessWidget{
 
-  Hive.registerAdapter(DataAdapter());
-  await Hive.openBox('data_box');
+    const MyApp({super.key});
 
-  runApp(const MyApp());
-}
+    @override
+    Widget build(BuildContext context){
+      return MaterialApp(
+        home:Scaffold(
+          appBar:AppBar(
+            title:const Text('Student Grade Table'),
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+            ),
+          body:DataTable(
+            columns:const[
+              DataColumn(label:Text('Name')),
+              DataColumn(label:Text('Subject')),
+              DataColumn(label:Text('Grade')),
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
-      debugShowCheckedModeBanner: false,
-    );
+              ],
+            rows:const[
+              DataRow(cells:[
+                DataCell(Text('Alice')),
+                DataCell(Text('Math')),
+                DataCell(Text('A')),
+                ]),
+              DataRow(cells:[
+                DataCell(Text('Bob')),
+                DataCell(Text('Science')),
+                DataCell(Text('B+')),
+                ]),
+              ],
+            ),
+          ),
+        );
+    }
   }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: ReadScreen()),
-    );
-  }
-}
+  
