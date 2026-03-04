@@ -1,40 +1,33 @@
-import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo_app/model/model.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 
-// import 'model/model.g.dart';
-
-import 'screens/read_screen.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-
-  Hive.registerAdapter(DataAdapter());
-  await Hive.openBox('data_box');
-
-  runApp(const MyApp());
+void main () {
+  runApp(DatabaseHelper());
 }
+  
+class DatabaseHelper {
+  static Database? _database;
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
-      debugShowCheckedModeBanner: false,
-    );
+  Future<Database> get database async {
+    if (_database != null) return _database ! ;
+    _database = await initDB();
+    return _database !;
+  }
+  initDB() async {
+    String path = join(await getDatabasesPath(), 'student.db');
+    return await openDatabase(
+      path.
+      version:1,
+      onCreate: (db, version) async {
+        await db.execute('''
+        CRRATE TABLE students(
+        id INTEGER PRIMARY KEY AUTOINCREMENT.
+        name TEXT.
+        age INTEGER
+        )
+        ''');
+      },
+      );
   }
 }
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: ReadScreen()),
-    );
-  }
-}
+ 
