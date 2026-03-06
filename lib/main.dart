@@ -30,4 +30,40 @@ class DatabaseHelper {
       );
   }
 }
+
+
+import 'dart : convert';
+var data =
+  jsonDecode('{"name":"AbdulNaeim"}');
+print(data['AbdulNaeim']);
+
+{
+  "name": "AbdulNaeim",
+  "age": 24
+  }
+
+{
+  "name": "AbdulNaeim",
+  "age": 24,
+  "city": "kabul"
+  }
+
+
+
+
+{
+  "student": "AbdulNaeim",
+  "sunjects":["Math", "English",
+              "Programming"]
+}
+  
+
+    
+  
+
+
+
+
+
+
  
